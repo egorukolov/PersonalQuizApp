@@ -10,19 +10,55 @@ import UIKit
 
 class ResultsViewController: UIViewController {
     
-    // 1. Передать массив с ответами на этот экран
-    // 2. Определить наиболее часто встречающийся тип животного
-    // 3. Отобразить результаты на экране
-    // 4. Избавится от кнопки back
-
+    // MARK: - IB Outlets
+    
+    @IBOutlet var emojiLabel: UILabel!
+    @IBOutlet var resultTextLabel: UILabel!
+    
+    // MARK: - Properties
+    
+    var answers: [Answer]!
+    
+    // MARK: - Override Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        let resultQuiz = calculatedResult()
+        emojiLabel.text = "Вы - " + String(resultQuiz.rawValue)
+        resultTextLabel.text = resultQuiz.definition
+        
+        let backButton = UIBarButtonItem(title: nil,
+                                         style: UIBarButtonItem.Style.plain,
+                                         target: navigationController,
+                                         action: nil)
+        
+        navigationItem.leftBarButtonItem = backButton
+        
     }
     
     deinit {
         print("ResultsViewController has been dealocated")
     }
-
+    
+    // MARK: - Private Methods
+    
+    private func calculatedResult() -> AnimalType {
+        
+        var results = [
+            AnimalType.dog : 0,
+            AnimalType.cat : 0,
+            AnimalType.rabbit : 0,
+            AnimalType.turtle : 0
+        ]
+        
+        for answer in answers {
+            results[answer.type]! += 1
+        }
+        
+        let sortResults = results.sorted(by: { $0.value > $1.value })
+        return sortResults.first!.key
+        
+    }
+    
 }
