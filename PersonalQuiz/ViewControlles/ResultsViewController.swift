@@ -28,12 +28,7 @@ class ResultsViewController: UIViewController {
         emojiLabel.text = "Вы - " + String(resultQuiz.rawValue)
         resultTextLabel.text = resultQuiz.definition
         
-        let backButton = UIBarButtonItem(title: nil,
-                                         style: UIBarButtonItem.Style.plain,
-                                         target: navigationController,
-                                         action: nil)
-        
-        navigationItem.leftBarButtonItem = backButton
+        navigationItem.hidesBackButton = true
         
     }
     
